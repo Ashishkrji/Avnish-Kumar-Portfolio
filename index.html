@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Avnish Kumar Ray | Portfolio</title>
+        <!-- Favicon -->
+        <link rel="icon" href="profile.jpeg" type="image/png">
+        <!-- Google Fonts: Inter -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+            rel="stylesheet">
+        <!-- Tailwind CSS via CDN -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <!-- Alpine.js via CDN -->
+        <script defer
+            src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+        <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        teal: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            200: '#99f6e4',
+                            300: '#5eead4',
+                            400: '#2dd4bf',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            800: '#115e59',
+                            900: '#134e4a',
+                            950: '#042f2e',
+                        }
+                    },
+                    animation: {
+                        'pulse-subtle': 'pulseSubtle 2s infinite',
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                    },
+                    keyframes: {
+                        pulseSubtle: {
+                            '0%, 100%': { opacity: '1', transform: 'scale(1)' },
+                            '50%': { opacity: '.5', transform: 'scale(1.1)' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+        <style>
+        [x-cloak] { display: none !important; }
+        .glass {
+            background: rgba(255, 255, 255, 0.85);
+            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+        }
+    </style>
+    </head>
+    <body
+        class="bg-white text-gray-900 font-sans antialiased overflow-x-hidden selection:bg-teal-100 selection:text-teal-900"
+        x-data="{ 
+          scrolled: false, 
+          mobileMenuOpen: false, 
+          activeSection: 'hero',
+          init() {
+              window.addEventListener('scroll', () => {
+                  this.scrolled = window.scrollY > 20;
+                  this.trackActiveSection();
+              });
+              this.trackActiveSection();
+          },
+          trackActiveSection() {
+              const sections = ['services', 'education', 'about', 'skills', 'contact'];
+              const scrollPos = window.scrollY + 200;
+              
+              if (scrollPos < document.getElementById('services').offsetTop) {
+                  this.activeSection = 'hero';
+                  return;
+              }
+              
+              for (const sec of sections) {
+                  const el = document.getElementById(sec);
+                  if (el) {
+                      const top = el.offsetTop;
+                      const height = el.offsetHeight;
+                      if (scrollPos >= top && scrollPos < top + height) {
+                          this.activeSection = sec;
+                          break;
+                      }
+                  }
+              }
+          }
+      }">
+
+        <!-- STICKY TOP NAVBAR -->
+        <header
+            class="fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b border-transparent"
+            :class="scrolled ? 'glass shadow-sm border-gray-100 py-3' : 'bg-transparent py-5'">
+            <div
+                class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+                <!-- Logo -->
+                <a href="#hero"
+                    class="text-3xl font-extrabold tracking-tight text-teal-700 hover:text-teal-800 transition duration-300">
+                    AKR<span class="text-teal-500">.</span>
+                </a>
+
+                <!-- Desktop Nav Links -->
+                <nav
+                    class="hidden md:flex items-center space-x-8 text-sm font-semibold tracking-wide">
+                    <a href="#services" class="transition-colors duration-300"
+                        :class="activeSection === 'services' ? 'text-teal-700' : 'text-gray-600 hover:text-teal-700'">Services</a>
+                    <a href="#education" class="transition-colors duration-300"
+                        :class="activeSection === 'education' ? 'text-teal-700' : 'text-gray-600 hover:text-teal-700'">Education</a>
+                    <a href="#about" class="transition-colors duration-300"
+                        :class="activeSection === 'about' ? 'text-teal-700' : 'text-gray-600 hover:text-teal-700'">About</a>
+                    <a href="#skills" class="transition-colors duration-300"
+                        :class="activeSection === 'skills' ? 'text-teal-700' : 'text-gray-600 hover:text-teal-700'">Skills</a>
+                    <a href="#contact" class="transition-colors duration-300"
+                        :class="activeSection === 'contact' ? 'text-teal-700' : 'text-gray-600 hover:text-teal-700'">Contact</a>
+                </nav>
+
+                <!-- CTA / Contact Trigger -->
+                <div class="hidden md:block">
+                    <a href="#contact"
+                        class="inline-flex items-center gap-1 bg-teal-700 text-white hover:bg-teal-800 px-5 py-2.5 rounded-full text-sm font-bold tracking-wider uppercase shadow-md hover:shadow-teal-700/20 transition-all duration-300">
+                        Hire Me <span
+                            class="transition-transform group-hover:translate-x-1">→</span>
+                    </a>
+                </div>
+
+                <!-- Mobile Hamburger Menu Button -->
+                <div class="md:hidden">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen"
+                        class="text-gray-700 hover:text-teal-700 focus:outline-none p-2"
+                        aria-label="Toggle Menu">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path x-show="!mobileMenuOpen"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2.5"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                            <path x-show="mobileMenuOpen" x-cloak
+                                stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Drawer Navigation -->
+            <div x-show="mobileMenuOpen"
+                x-cloak
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0 -translate-y-4"
+                x-transition:enter-end="opacity-100 translate-y-0"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100 translate-y-0"
+                x-transition:leave-end="opacity-0 -translate-y-4"
+                class="absolute top-full left-0 w-full bg-white shadow-lg border-b border-gray-100 flex flex-col px-6 py-4 space-y-3.5 md:hidden">
+                <a href="#services" @click="mobileMenuOpen = false"
+                    class="text-base font-semibold py-2"
+                    :class="activeSection === 'services' ? 'text-teal-700' : 'text-gray-700 hover:text-teal-700'">Services</a>
+                <a href="#education" @click="mobileMenuOpen = false"
+                    class="text-base font-semibold py-2"
+                    :class="activeSection === 'education' ? 'text-teal-700' : 'text-gray-700 hover:text-teal-700'">Education</a>
+                <a href="#about" @click="mobileMenuOpen = false"
+                    class="text-base font-semibold py-2"
+                    :class="activeSection === 'about' ? 'text-teal-700' : 'text-gray-700 hover:text-teal-700'">About</a>
+                <a href="#skills" @click="mobileMenuOpen = false"
+                    class="text-base font-semibold py-2"
+                    :class="activeSection === 'skills' ? 'text-teal-700' : 'text-gray-700 hover:text-teal-700'">Skills</a>
+                <a href="#contact" @click="mobileMenuOpen = false"
+                    class="text-base font-semibold py-2"
+                    :class="activeSection === 'contact' ? 'text-teal-700' : 'text-gray-700 hover:text-teal-700'">Contact</a>
+                <a href="#contact" @click="mobileMenuOpen = false"
+                    class="inline-flex justify-center items-center gap-1 bg-teal-700 text-white hover:bg-teal-800 px-5 py-3 rounded-xl text-base font-bold tracking-wider uppercase transition-all duration-300 w-full text-center">
+                    Hire Me →
+                </a>
+            </div>
+        </header>
+
+        <!-- SECTION 1 — HERO -->
+        <section id="hero"
+            class="relative min-h-screen flex items-center bg-[#fafbfc] pt-32 pb-24 overflow-hidden">
+            <div
+                class="max-w-7xl mx-auto px-6 grid md:grid-cols-12 gap-12 items-center w-full relative z-10">
+                <!-- Left Side Column -->
+                <div
+                    class="md:col-span-7 flex flex-col justify-center animate-fade-in-up">
+                    <!-- Available badge -->
+                    <div
+                        class="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-full text-xs font-bold tracking-wide uppercase max-w-max mb-6">
+                        <span
+                            class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse-subtle"></span>
+                        Available for opportunities
+                    </div>
+
+                    <h1
+                        class="text-4xl sm:text-6xl font-black text-gray-900 tracking-tight leading-none mb-4">
+                        Hi, I'm <span class="text-teal-700">Avnish</span>
+                    </h1>
+
+                    <p
+                        class="text-lg sm:text-xl text-gray-600 font-medium tracking-wide mb-8 max-w-2xl leading-relaxed">
+                        MBA Candidate in Business Analytics & Finance.
+                        Passionate about data-driven decision making, financial
+                        analysis, and building impactful business solutions.
+                    </p>
+
+                    <!-- Action Button row -->
+                    <div class="flex flex-wrap gap-4 mb-12">
+                        <a href="#skills"
+                            class="inline-flex items-center gap-1.5 bg-teal-700 hover:bg-teal-800 text-white font-bold text-sm uppercase tracking-wider px-7 py-3.5 rounded-full shadow-lg hover:shadow-teal-700/25 transition-all duration-300 group">
+                            View My Work <span
+                                class="transition-transform group-hover:translate-x-1">→</span>
+                        </a>
+                        <a href="#contact"
+                            class="inline-flex items-center border border-gray-300 hover:border-teal-700 hover:text-teal-700 text-gray-700 font-bold text-sm uppercase tracking-wider px-7 py-3.5 rounded-full transition-all duration-300 bg-white">
+                            Get in touch
+                        </a>
+                    </div>
+
+                    <!-- Three stats inside light gray cards -->
+                    <div class="grid grid-cols-3 gap-4 max-w-xl">
+                        <div
+                            class="bg-gray-100 p-4 rounded-2xl flex flex-col justify-center shadow-sm">
+                            <span
+                                class="text-2xl sm:text-3xl font-black text-teal-700">2+</span>
+                            <span
+                                class="text-[10px] sm:text-xs text-gray-500 font-bold uppercase tracking-wider mt-1">Certifications</span>
+                        </div>
+                        <div
+                            class="bg-gray-100 p-4 rounded-2xl flex flex-col justify-center shadow-sm">
+                            <span
+                                class="text-2xl sm:text-3xl font-black text-teal-700">1</span>
+                            <span
+                                class="text-[10px] sm:text-xs text-gray-500 font-bold uppercase tracking-wider mt-1">Internship</span>
+                        </div>
+                        <div
+                            class="bg-gray-100 p-4 rounded-2xl flex flex-col justify-center shadow-sm">
+                            <span
+                                class="text-2xl sm:text-3xl font-black text-teal-700">4+
+                                yrs</span>
+                            <span
+                                class="text-[10px] sm:text-xs text-gray-500 font-bold uppercase tracking-wider mt-1">Education</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side Column (Photo with Fallback initials) -->
+                <div
+                    class="md:col-span-5 flex justify-center items-center relative">
+                    <div
+                        class="relative w-72 h-72 sm:w-80 sm:h-80 md:w-[350px] md:h-[350px] flex items-center justify-center p-2 rounded-full border-2 border-dashed border-teal-200">
+                        <!-- Photo rendering -->
+                        <div
+                            class="w-full h-full rounded-full overflow-hidden bg-gray-100 relative shadow-xl">
+                            <img id="hero-img"
+                                src="profile.jpeg"
+                                alt="Avnish Kumar Ray"
+                                class="w-full h-full object-cover transition duration-500 hover:scale-105">
+                            <!-- High visual Fallback initials -->
+                            <div id="hero-fallback"
+                                class="hidden absolute inset-0 bg-gradient-to-tr from-teal-700 to-teal-500 flex items-center justify-center">
+                                <span
+                                    class="text-6xl font-extrabold tracking-widest text-white">AKR</span>
+                            </div>
+                        </div>
+
+                        <!-- Floating Badge bottom-left of photo -->
+                        <div
+                            class="absolute bottom-4 left-0 inline-flex items-center gap-1.5 px-3 py-1.5 bg-white shadow-lg border border-gray-100 rounded-full text-xs font-bold text-gray-800 tracking-wide animate-bounce">
+                            <span
+                                class="w-2.5 h-2.5 rounded-full bg-teal-500 animate-pulse-subtle"></span>
+                            Open to opportunities
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2 — SERVICES -->
+        <section id="services" class="py-24 bg-white border-t border-gray-100">
+            <div class="max-w-7xl mx-auto px-6">
+                <!-- Header -->
+                <div class="mb-16">
+                    <span
+                        class="text-xs font-bold text-teal-700 tracking-widest uppercase block mb-2">What
+                        I do</span>
+                    <h2
+                        class="text-3xl sm:text-4xl font-extrabold text-gray-900 uppercase">Services</h2>
+                    <div class="h-1 w-12 bg-teal-700 rounded-full mt-3"></div>
+                </div>
+
+                <!-- Cards -->
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Card 1 -->
+                    <div
+                        class="bg-white border border-gray-100 p-8 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col">
+                        <div
+                            class="p-4 bg-teal-50 text-teal-700 rounded-2xl w-max mb-6">
+                            <!-- Chart Bar Icon -->
+                            <svg class="w-6 h-6" fill="none"
+                                stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                            </svg>
+                        </div>
+                        <h3
+                            class="text-xl font-bold text-gray-900 mb-3">Business
+                            Analytics</h3>
+                        <p
+                            class="text-gray-600 text-sm leading-relaxed font-medium">
+                            Skilled in data analysis using Excel and R. I
+                            transform raw data into actionable insights to
+                            support strategic business decisions.
+                        </p>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div
+                        class="bg-white border border-gray-100 p-8 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col">
+                        <div
+                            class="p-4 bg-teal-50 text-teal-700 rounded-2xl w-max mb-6">
+                            <!-- Currency Rupee Icon -->
+                            <svg class="w-6 h-6" fill="none"
+                                stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M9 8h6m-5 0a3 3 0 110 6H9l3 3m-3-6h6M12 3a9 9 0 11-9 9 9 9 0 019-9z" />
+                            </svg>
+                        </div>
+                        <h3
+                            class="text-xl font-bold text-gray-900 mb-3">Financial
+                            Analysis</h3>
+                        <p
+                            class="text-gray-600 text-sm leading-relaxed font-medium">
+                            Strong foundation in finance concepts with hands-on
+                            internship experience in financial operations and
+                            reporting.
+                        </p>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div
+                        class="bg-white border border-gray-100 p-8 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col">
+                        <div
+                            class="p-4 bg-teal-50 text-teal-700 rounded-2xl w-max mb-6">
+                            <!-- Briefcase Icon -->
+                            <svg class="w-6 h-6" fill="none"
+                                stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <h3
+                            class="text-xl font-bold text-gray-900 mb-3">Business
+                            Strategy</h3>
+                        <p
+                            class="text-gray-600 text-sm leading-relaxed font-medium">
+                            MBA training in market analysis, consultative
+                            thinking, and team collaboration to drive revenue
+                            growth and organizational goals.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3 — EDUCATION -->
+        <section id="education" class="py-24 bg-[#fafbfc] border-t border-gray-100 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6">
+                <!-- Header -->
+                <div class="mb-20 text-center">
+                    <span class="text-xs font-bold text-teal-700 tracking-widest uppercase block mb-2">My Journey</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 uppercase">Education</h2>
+                    <div class="h-1 w-12 bg-teal-700 rounded-full mt-3 mx-auto"></div>
+                </div>
+
+                <!-- Vertical Alternating Timeline Layout -->
+                <div class="relative max-w-5xl mx-auto">
+                    <!-- Central Vertical Timeline Line (Hidden on mobile, centered on desktop) -->
+                    <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-teal-200 transform md:-translate-x-1/2"></div>
+
+                    <div class="space-y-16 relative">
+                        <!-- Timeline Item 1 (Left Side on Desktop) -->
+                        <div class="relative flex flex-col md:flex-row items-start md:items-center justify-between scroll-animate opacity-0 translate-y-10 transition-all duration-1000 ease-out">
+                            <!-- Card Container -->
+                            <div class="w-full md:w-[calc(50%-2.5rem)] pl-8 md:pl-0 order-2 md:order-1">
+                                <div class="bg-white border border-gray-100 p-6 sm:p-8 rounded-2xl shadow-sm hover:shadow-xl hover:border-teal-500/30 hover:-translate-y-1.5 transition-all duration-300 transform group">
+                                    <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                                        <span class="px-3.5 py-1.5 bg-teal-50 text-teal-800 text-xs font-bold rounded-full border border-teal-100 uppercase tracking-wider transition-colors duration-300 group-hover:bg-teal-700 group-hover:text-white group-hover:border-transparent">
+                                            2024 – 2026
+                                        </span>
+                                        <div class="flex gap-1.5 flex-wrap">
+                                            <span class="px-2.5 py-0.5 bg-gray-100 text-gray-600 text-[10px] font-bold rounded-md uppercase tracking-wider group-hover:bg-teal-50 transition-colors duration-300">MBA</span>
+                                            <span class="px-2.5 py-0.5 bg-gray-100 text-gray-600 text-[10px] font-bold rounded-md uppercase tracking-wider group-hover:bg-teal-50 transition-colors duration-300">Analytics</span>
+                                            <span class="px-2.5 py-0.5 bg-gray-100 text-gray-600 text-[10px] font-bold rounded-md uppercase tracking-wider group-hover:bg-teal-50 transition-colors duration-300">Finance</span>
+                                        </div>
+                                    </div>
+                                    <h3 class="text-xl font-extrabold text-gray-900 group-hover:text-teal-700 transition-colors duration-300">Masters of Business Administration</h3>
+                                    <p class="text-teal-700 font-bold text-sm mt-1.5">CT Group of Institutions, Jalandhar, Punjab</p>
+                                    <p class="text-gray-500 font-semibold text-xs tracking-wide mt-3 flex items-center gap-1">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-teal-500"></span>
+                                        Specialization: Business Analytics & Finance
+                                    </p>
+                                    <p class="text-gray-600 text-sm font-medium leading-relaxed mt-4 pt-4 border-t border-gray-100/80">
+                                        Deeply focusing on business strategy, predictive modeling, financial analysis, and database management. Actively working on projects utilizing R and advanced Excel to convert complex data sets into actionable corporate insights and streamlined operations.
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Central Dot -->
+                            <div class="absolute left-4 md:left-1/2 w-5 h-5 rounded-full bg-teal-700 border-4 border-white transform -translate-x-1/2 z-10 shadow-md top-1 md:top-auto"></div>
+                            <!-- Spacer on Desktop -->
+                            <div class="hidden md:block w-[calc(50%-2.5rem)] order-3"></div>
+                        </div>
+
+                        <!-- Timeline Item 2 (Right Side on Desktop) -->
+                        <div class="relative flex flex-col md:flex-row items-start md:items-center justify-between scroll-animate opacity-0 translate-y-10 transition-all duration-1000 ease-out">
+                            <!-- Spacer on Desktop -->
+                            <div class="hidden md:block w-[calc(50%-2.5rem)] order-1"></div>
+                            <!-- Central Dot -->
+                            <div class="absolute left-4 md:left-1/2 w-5 h-5 rounded-full bg-teal-700 border-4 border-white transform -translate-x-1/2 z-10 shadow-md top-1 md:top-auto"></div>
+                            <!-- Card Container -->
+                            <div class="w-full md:w-[calc(50%-2.5rem)] pl-8 md:pl-0 order-3">
+                                <div class="bg-white border border-gray-100 p-6 sm:p-8 rounded-2xl shadow-sm hover:shadow-xl hover:border-teal-500/30 hover:-translate-y-1.5 transition-all duration-300 transform group">
+                                    <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                                        <span class="px-3.5 py-1.5 bg-teal-50 text-teal-800 text-xs font-bold rounded-full border border-teal-100 uppercase tracking-wider transition-colors duration-300 group-hover:bg-teal-700 group-hover:text-white group-hover:border-transparent">
+                                            2024
+                                        </span>
+                                        <div class="flex gap-1.5 flex-wrap">
+                                            <span class="px-2.5 py-0.5 bg-gray-100 text-gray-600 text-[10px] font-bold rounded-md uppercase tracking-wider group-hover:bg-teal-50 transition-colors duration-300">BA</span>
+                                            <span class="px-2.5 py-0.5 bg-gray-100 text-gray-600 text-[10px] font-bold rounded-md uppercase tracking-wider group-hover:bg-teal-50 transition-colors duration-300">Hindi Literature</span>
+                                        </div>
+                                    </div>
+                                    <h3 class="text-xl font-extrabold text-gray-900 group-hover:text-teal-700 transition-colors duration-300">Bachelor of Arts (Hindi)</h3>
+                                    <p class="text-teal-700 font-bold text-sm mt-1.5">LMNU</p>
+                                    <p class="text-gray-600 text-sm font-medium leading-relaxed mt-4 pt-4 border-t border-gray-100/80">
+                                        Acquired comprehensive knowledge of Hindi literature, language structures, and historical context. Developed exceptional writing, critical analysis, and interpersonal communication skills, laying a solid foundation for cross-functional collaboration and documentation.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Timeline Item 3 (Left Side on Desktop) -->
+                        <div class="relative flex flex-col md:flex-row items-start md:items-center justify-between scroll-animate opacity-0 translate-y-10 transition-all duration-1000 ease-out">
+                            <!-- Card Container -->
+                            <div class="w-full md:w-[calc(50%-2.5rem)] pl-8 md:pl-0 order-2 md:order-1">
+                                <div class="bg-white border border-gray-100 p-6 sm:p-8 rounded-2xl shadow-sm hover:shadow-xl hover:border-teal-500/30 hover:-translate-y-1.5 transition-all duration-300 transform group">
+                                    <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                                        <span class="px-3.5 py-1.5 bg-teal-50 text-teal-800 text-xs font-bold rounded-full border border-teal-100 uppercase tracking-wider transition-colors duration-300 group-hover:bg-teal-700 group-hover:text-white group-hover:border-transparent">
+                                            2021
+                                        </span>
+                                        <div class="flex gap-1.5 flex-wrap">
+                                            <span class="px-2.5 py-0.5 bg-gray-100 text-gray-600 text-[10px] font-bold rounded-md uppercase tracking-wider group-hover:bg-teal-50 transition-colors duration-300">Math</span>
+                                            <span class="px-2.5 py-0.5 bg-gray-100 text-gray-600 text-[10px] font-bold rounded-md uppercase tracking-wider group-hover:bg-teal-50 transition-colors duration-300">Science</span>
+                                        </div>
+                                    </div>
+                                    <h3 class="text-xl font-extrabold text-gray-900 group-hover:text-teal-700 transition-colors duration-300">Intermediate — Mathematics</h3>
+                                    <p class="text-teal-700 font-bold text-sm mt-1.5">BSEB Patna</p>
+                                    <p class="text-gray-600 text-sm font-medium leading-relaxed mt-4 pt-4 border-t border-gray-100/80">
+                                        Completed major studies in Mathematics and Science streams under the BSEB Patna Board. Formed strong logical thinking, problem-solving capabilities, and quantitative aptitude, which sparked my deep passion for analytics and financial modeling.
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Central Dot -->
+                            <div class="absolute left-4 md:left-1/2 w-5 h-5 rounded-full bg-teal-700 border-4 border-white transform -translate-x-1/2 z-10 shadow-md top-1 md:top-auto"></div>
+                            <!-- Spacer on Desktop -->
+                            <div class="hidden md:block w-[calc(50%-2.5rem)] order-3"></div>
+                        </div>
+
+                        <!-- Timeline Item 4 (Right Side on Desktop) -->
+                        <div class="relative flex flex-col md:flex-row items-start md:items-center justify-between scroll-animate opacity-0 translate-y-10 transition-all duration-1000 ease-out">
+                            <!-- Spacer on Desktop -->
+                            <div class="hidden md:block w-[calc(50%-2.5rem)] order-1"></div>
+                            <!-- Central Dot -->
+                            <div class="absolute left-4 md:left-1/2 w-5 h-5 rounded-full bg-teal-700 border-4 border-white transform -translate-x-1/2 z-10 shadow-md top-1 md:top-auto"></div>
+                            <!-- Card Container -->
+                            <div class="w-full md:w-[calc(50%-2.5rem)] pl-8 md:pl-0 order-3">
+                                <div class="bg-white border border-gray-100 p-6 sm:p-8 rounded-2xl shadow-sm hover:shadow-xl hover:border-teal-500/30 hover:-translate-y-1.5 transition-all duration-300 transform group">
+                                    <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                                        <span class="px-3.5 py-1.5 bg-teal-50 text-teal-800 text-xs font-bold rounded-full border border-teal-100 uppercase tracking-wider transition-colors duration-300 group-hover:bg-teal-700 group-hover:text-white group-hover:border-transparent">
+                                            2018
+                                        </span>
+                                        <div class="flex gap-1.5 flex-wrap">
+                                            <span class="px-2.5 py-0.5 bg-gray-100 text-gray-600 text-[10px] font-bold rounded-md uppercase tracking-wider group-hover:bg-teal-50 transition-colors duration-300">School</span>
+                                        </div>
+                                    </div>
+                                    <h3 class="text-xl font-extrabold text-gray-900 group-hover:text-teal-700 transition-colors duration-300">Matriculation</h3>
+                                    <p class="text-teal-700 font-bold text-sm mt-1.5">BSEB Patna</p>
+                                    <p class="text-gray-600 text-sm font-medium leading-relaxed mt-4 pt-4 border-t border-gray-100/80">
+                                        Laid the foundational brick of my academic journey under the BSEB Patna Board, focusing on mathematics, science, and general humanities. Developed key primary leadership qualities and rigorous discipline early on.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4 — ABOUT -->
+        <section id="about" class="py-24 bg-white border-t border-gray-100">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid md:grid-cols-12 gap-12 items-center">
+                    <!-- Left Image Column -->
+                    <div class="md:col-span-5 flex justify-center">
+                        <div
+                            class="relative w-72 h-72 sm:w-80 sm:h-80 md:w-[350px] md:h-[350px] rounded-2xl overflow-hidden shadow-2xl bg-gray-100">
+                            <img id="about-img"
+                                src="profile.jpeg"
+                                alt="About Avnish Kumar Ray"
+                                class="w-full h-full object-cover transition duration-500 hover:scale-105">
+                            <div id="about-fallback"
+                                class="hidden absolute inset-0 bg-gradient-to-tr from-teal-700 to-teal-500 flex items-center justify-center">
+                                <span
+                                    class="text-6xl font-extrabold tracking-widest text-white">AKR</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Details Column -->
+                    <div class="md:col-span-7 flex flex-col justify-center">
+                        <div class="mb-6">
+                            <span
+                                class="text-xs font-bold text-teal-700 tracking-widest uppercase block mb-2">About
+                                me</span>
+                            <h2
+                                class="text-3xl sm:text-4xl font-extrabold text-gray-900 uppercase">A
+                                bit about who I am</h2>
+                            <div
+                                class="h-1 w-12 bg-teal-700 rounded-full mt-3"></div>
+                        </div>
+
+                        <p
+                            class="text-gray-600 text-sm font-medium leading-relaxed mb-4 tracking-wide">
+                            I'm Avnish Kumar Ray, an MBA student specializing in
+                            Business Analytics & Finance at CT Group of
+                            Institutions. I'm passionate about turning data into
+                            decisions and building strong professional
+                            relationships. I thrive at the intersection of
+                            business strategy and analytical thinking.
+                        </p>
+                        <p
+                            class="text-gray-600 text-sm font-medium leading-relaxed mb-8 tracking-wide">
+                            I interned at Solitaire Infosys Pvt. Ltd. in their
+                            Finance Department, where I gained real-world
+                            exposure to financial operations. When I'm not
+                            studying, I enjoy exploring new tools in Excel and R
+                            to sharpen my analytical skills.
+                        </p>
+
+                        <!-- Tech Stack & Tools tags (button-like outline slots) -->
+                        <div>
+                            <h3
+                                class="text-sm font-bold text-gray-800 tracking-wide uppercase mb-4">Stack
+                                & tools</h3>
+                            <div class="flex flex-wrap gap-2.5">
+                                <span
+                                    class="px-4 py-2 border border-gray-200 text-gray-700 hover:border-teal-700 hover:bg-teal-50 transition duration-300 text-xs font-bold rounded-lg cursor-default">MS
+                                    Excel</span>
+                                <span
+                                    class="px-4 py-2 border border-gray-200 text-gray-700 hover:border-teal-700 hover:bg-teal-50 transition duration-300 text-xs font-bold rounded-lg cursor-default">MS
+                                    PowerPoint</span>
+                                <span
+                                    class="px-4 py-2 border border-gray-200 text-gray-700 hover:border-teal-700 hover:bg-teal-50 transition duration-300 text-xs font-bold rounded-lg cursor-default">MS
+                                    Word</span>
+                                <span
+                                    class="px-4 py-2 border border-gray-200 text-gray-700 hover:border-teal-700 hover:bg-teal-50 transition duration-300 text-xs font-bold rounded-lg cursor-default">R
+                                    (Analytics)</span>
+                                <span
+                                    class="px-4 py-2 border border-gray-200 text-gray-700 hover:border-teal-700 hover:bg-teal-50 transition duration-300 text-xs font-bold rounded-lg cursor-default">Business
+                                    Analytics</span>
+                                <span
+                                    class="px-4 py-2 border border-gray-200 text-gray-700 hover:border-teal-700 hover:bg-teal-50 transition duration-300 text-xs font-bold rounded-lg cursor-default">Finance</span>
+                                <span
+                                    class="px-4 py-2 border border-gray-200 text-gray-700 hover:border-teal-700 hover:bg-teal-50 transition duration-300 text-xs font-bold rounded-lg cursor-default">Hindi</span>
+                                <span
+                                    class="px-4 py-2 border border-gray-200 text-gray-700 hover:border-teal-700 hover:bg-teal-50 transition duration-300 text-xs font-bold rounded-lg cursor-default">English</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5 — SKILLS & CERTIFICATIONS -->
+        <section id="skills" class="py-24 bg-[#fafbfc] border-t border-gray-100 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6">
+                <!-- Header -->
+                <div class="mb-20 text-center">
+                    <span class="text-xs font-bold text-teal-700 tracking-widest uppercase block mb-2">My Skills</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 uppercase">Technical Skills & Certifications</h2>
+                    <div class="h-1 w-12 bg-teal-700 rounded-full mt-3 mx-auto"></div>
+                </div>
+
+                <div class="grid lg:grid-cols-12 gap-12 max-w-6xl mx-auto items-start">
+                    <!-- Left Column: Skills Dashboards (7 cols) -->
+                    <div class="lg:col-span-7 space-y-10">
+                        <h3 class="text-xl font-extrabold text-gray-900 uppercase tracking-wider flex items-center gap-2">
+                            <span class="p-2 bg-teal-50 text-teal-700 rounded-lg">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z" />
+                                </svg>
+                            </span>
+                            Technical Proficiency Dashboard
+                        </h3>
+
+                        <!-- Category 1: Business & Financial Analytics -->
+                        <div class="bg-white border border-gray-100 p-6 sm:p-8 rounded-3xl shadow-sm hover:shadow-md transition-all duration-300">
+                            <h4 class="text-sm font-bold text-teal-700 uppercase tracking-widest mb-6 flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-teal-700"></span>
+                                Business & Financial Analytics
+                            </h4>
+
+                            <div class="space-y-6">
+                                <!-- Skill 1 -->
+                                <div class="space-y-2 group">
+                                    <div class="flex justify-between items-center text-sm font-bold text-gray-800">
+                                        <span class="group-hover:text-teal-700 transition-colors duration-200">MS Excel (Advanced — Pivot, Dashboards, VLOOKUP)</span>
+                                        <span class="text-teal-700">90%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-100 h-2.5 rounded-full overflow-hidden">
+                                        <div class="bg-gradient-to-r from-teal-600 to-emerald-500 h-full w-[90%] rounded-full transition-all duration-1000 group-hover:shadow-[0_0_8px_rgba(20,184,166,0.5)]"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Skill 2 -->
+                                <div class="space-y-2 group">
+                                    <div class="flex justify-between items-center text-sm font-bold text-gray-800">
+                                        <span class="group-hover:text-teal-700 transition-colors duration-200">Business Analytics (R & Python Foundations)</span>
+                                        <span class="text-teal-700">80%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-100 h-2.5 rounded-full overflow-hidden">
+                                        <div class="bg-gradient-to-r from-teal-600 to-emerald-500 h-full w-[80%] rounded-full transition-all duration-1000 group-hover:shadow-[0_0_8px_rgba(20,184,166,0.5)]"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Skill 3 -->
+                                <div class="space-y-2 group">
+                                    <div class="flex justify-between items-center text-sm font-bold text-gray-800">
+                                        <span class="group-hover:text-teal-700 transition-colors duration-200">Data Visualization (Power BI & Excel Charts)</span>
+                                        <span class="text-teal-700">85%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-100 h-2.5 rounded-full overflow-hidden">
+                                        <div class="bg-gradient-to-r from-teal-600 to-emerald-500 h-full w-[85%] rounded-full transition-all duration-1000 group-hover:shadow-[0_0_8px_rgba(20,184,166,0.5)]"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Category 2: Corporate Finance & MBA Strategy -->
+                        <div class="bg-white border border-gray-100 p-6 sm:p-8 rounded-3xl shadow-sm hover:shadow-md transition-all duration-300">
+                            <h4 class="text-sm font-bold text-teal-700 uppercase tracking-widest mb-6 flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-teal-700"></span>
+                                Corporate Finance & MBA Strategy
+                            </h4>
+
+                            <div class="space-y-6">
+                                <!-- Skill 1 -->
+                                <div class="space-y-2 group">
+                                    <div class="flex justify-between items-center text-sm font-bold text-gray-800">
+                                        <span class="group-hover:text-teal-700 transition-colors duration-200">Financial Modeling & Valuation</span>
+                                        <span class="text-teal-700">75%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-100 h-2.5 rounded-full overflow-hidden">
+                                        <div class="bg-gradient-to-r from-teal-600 to-emerald-500 h-full w-[75%] rounded-full transition-all duration-1000 group-hover:shadow-[0_0_8px_rgba(20,184,166,0.5)]"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Skill 2 -->
+                                <div class="space-y-2 group">
+                                    <div class="flex justify-between items-center text-sm font-bold text-gray-800">
+                                        <span class="group-hover:text-teal-700 transition-colors duration-200">Financial Operations & Reporting</span>
+                                        <span class="text-teal-700">80%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-100 h-2.5 rounded-full overflow-hidden">
+                                        <div class="bg-gradient-to-r from-teal-600 to-emerald-500 h-full w-[80%] rounded-full transition-all duration-1000 group-hover:shadow-[0_0_8px_rgba(20,184,166,0.5)]"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Skill 3 -->
+                                <div class="space-y-2 group">
+                                    <div class="flex justify-between items-center text-sm font-bold text-gray-800">
+                                        <span class="group-hover:text-teal-700 transition-colors duration-200">Business Strategy & consultative pitch-decks</span>
+                                        <span class="text-teal-700">85%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-100 h-2.5 rounded-full overflow-hidden">
+                                        <div class="bg-gradient-to-r from-teal-600 to-emerald-500 h-full w-[85%] rounded-full transition-all duration-1000 group-hover:shadow-[0_0_8px_rgba(20,184,166,0.5)]"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Certifications & Badges (5 cols) -->
+                    <div class="lg:col-span-5 space-y-6">
+                        <h3 class="text-xl font-extrabold text-gray-900 uppercase tracking-wider flex items-center gap-2 mb-10">
+                            <span class="p-2 bg-emerald-50 text-emerald-700 rounded-lg">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                                </svg>
+                            </span>
+                            Certifications & Badges
+                        </h3>
+
+                        <!-- Certification Card 1 -->
+                        <div class="bg-white border-l-4 border-l-teal-600 border border-gray-100 p-6 rounded-r-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-start gap-4 group">
+                            <div class="p-3 bg-teal-50 text-teal-700 rounded-xl shrink-0 group-hover:bg-teal-700 group-hover:text-white transition-all duration-300">
+                                <svg class="w-6 h-6 stroke-[2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                                </svg>
+                            </div>
+                            <div class="flex-grow">
+                                <div class="flex items-center justify-between gap-2 mb-1">
+                                    <h4 class="font-extrabold text-gray-900 text-base group-hover:text-teal-700 transition-colors duration-200">Advanced Excel Training</h4>
+                                    <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[9px] font-black tracking-wide rounded">Verified ✓</span>
+                                </div>
+                                <p class="text-sm text-gray-500 font-bold">Udemy Academy Specialization</p>
+                            </div>
+                        </div>
+
+                        <!-- Certification Card 2 -->
+                        <div class="bg-white border-l-4 border-l-teal-600 border border-gray-100 p-6 rounded-r-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-start gap-4 group">
+                            <div class="p-3 bg-teal-50 text-teal-700 rounded-xl shrink-0 group-hover:bg-teal-700 group-hover:text-white transition-all duration-300">
+                                <svg class="w-6 h-6 stroke-[2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                                </svg>
+                            </div>
+                            <div class="flex-grow">
+                                <div class="flex items-center justify-between gap-2 mb-1">
+                                    <h4 class="font-extrabold text-gray-900 text-base group-hover:text-teal-700 transition-colors duration-200">Business Analytics Using R</h4>
+                                    <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[9px] font-black tracking-wide rounded">Verified ✓</span>
+                                </div>
+                                <p class="text-sm text-gray-500 font-bold">Infosys Springboard Certification</p>
+                            </div>
+                        </div>
+
+                        <!-- Certification Card 3 -->
+                        <div class="bg-white border-l-4 border-l-teal-600 border border-gray-100 p-6 rounded-r-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-start gap-4 group">
+                            <div class="p-3 bg-teal-50 text-teal-700 rounded-xl shrink-0 group-hover:bg-teal-700 group-hover:text-white transition-all duration-300">
+                                <svg class="w-6 h-6 stroke-[2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <div class="flex-grow">
+                                <div class="flex items-center justify-between gap-2 mb-1">
+                                    <h4 class="font-extrabold text-gray-900 text-base group-hover:text-teal-700 transition-colors duration-200">Financial Modeling & Valuation</h4>
+                                    <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[9px] font-black tracking-wide rounded">Verified ✓</span>
+                                </div>
+                                <p class="text-sm text-gray-500 font-bold">CFI Course Curriculum</p>
+                            </div>
+                        </div>
+
+                        <!-- Certification Card 4 -->
+                        <div class="bg-white border-l-4 border-l-teal-600 border border-gray-100 p-6 rounded-r-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-start gap-4 group">
+                            <div class="p-3 bg-teal-50 text-teal-700 rounded-xl shrink-0 group-hover:bg-teal-700 group-hover:text-white transition-all duration-300">
+                                <svg class="w-6 h-6 stroke-[2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                            <div class="flex-grow">
+                                <div class="flex items-center justify-between gap-2 mb-1">
+                                    <h4 class="font-extrabold text-gray-900 text-base group-hover:text-teal-700 transition-colors duration-200">Predictive Analytics for Business</h4>
+                                    <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[9px] font-black tracking-wide rounded">Verified ✓</span>
+                                </div>
+                                <p class="text-sm text-gray-500 font-bold">Coursera / Google Analytics</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 6 — EXPERIENCE -->
+        <section id="experience" class="py-24 bg-white border-t border-gray-100 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6">
+                <!-- Header -->
+                <div class="mb-20 text-center">
+                    <span class="text-xs font-bold text-teal-700 tracking-widest uppercase block mb-2">My Experience</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 uppercase">Work Experience</h2>
+                    <div class="h-1 w-12 bg-teal-700 rounded-full mt-3 mx-auto"></div>
+                </div>
+
+                <!-- Premium Dual-Pane Internship Dashboard -->
+                <div class="max-w-5xl mx-auto bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:border-teal-500/20 transition-all duration-300 mb-20 grid md:grid-cols-12 items-stretch">
+                    <!-- Left Column: Branding and Context Card (4 cols) -->
+                    <div class="md:col-span-4 bg-gradient-to-b from-teal-50 to-emerald-50/30 p-8 flex flex-col justify-between border-r border-gray-100">
+                        <div class="text-center md:text-left">
+                            <span class="text-teal-700 inline-block p-4 bg-white rounded-2xl shadow-sm mb-6 transform hover:scale-110 transition-transform duration-300">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" />
+                                </svg>
+                            </span>
+                            <h4 class="text-2xl font-black text-gray-900 tracking-tight">Solitaire Infosys</h4>
+                            <p class="text-teal-700 font-bold text-sm tracking-wider uppercase mt-1">Finance Department</p>
+                            <span class="inline-block mt-3 px-3 py-1 bg-teal-100 text-teal-800 text-xs font-bold rounded-full uppercase tracking-wider">
+                                Internship Role
+                            </span>
+                        </div>
+                        <div class="mt-8 pt-6 border-t border-gray-100 text-center md:text-left">
+                            <p class="text-xs font-extrabold text-gray-400 uppercase tracking-widest">Duration</p>
+                            <p class="text-sm font-bold text-gray-700 mt-1 flex items-center justify-center md:justify-start gap-1.5">
+                                <svg class="w-4 h-4 text-teal-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                June 2025 – August 2025
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Accomplishments & Deliverables (8 cols) -->
+                    <div class="md:col-span-8 p-8 sm:p-10 flex flex-col justify-center">
+                        <div class="flex flex-wrap items-center gap-2 mb-6">
+                            <span class="px-2.5 py-0.5 bg-gray-100 text-gray-600 text-[10px] font-bold rounded uppercase tracking-wider">Finance</span>
+                            <span class="px-2.5 py-0.5 bg-gray-100 text-gray-600 text-[10px] font-bold rounded uppercase tracking-wider">Analytics</span>
+                            <span class="px-2.5 py-0.5 bg-gray-100 text-gray-600 text-[10px] font-bold rounded uppercase tracking-wider">Reporting</span>
+                        </div>
+
+                        <h3 class="text-2xl font-black text-gray-900 mb-2">Finance Intern & Operations Analyst</h3>
+                        <p class="text-teal-700 font-bold text-sm mb-6">Solitaire Infosys Pvt. Ltd.</p>
+
+                        <!-- Deliverables List -->
+                        <div class="space-y-4">
+                            <!-- Deliverable 1 -->
+                            <div class="flex items-start gap-3 group">
+                                <span class="p-1 bg-teal-50 text-teal-700 rounded-lg group-hover:bg-teal-700 group-hover:text-white transition-all duration-300 shrink-0 mt-0.5">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </span>
+                                <p class="text-gray-600 text-sm font-medium leading-relaxed">
+                                    <strong class="text-gray-900">Financial Reporting:</strong> Gained extensive hands-on experience in reconciling daily financial sheets and compiling detailed department budget sheets.
+                                </p>
+                            </div>
+
+                            <!-- Deliverable 2 -->
+                            <div class="flex items-start gap-3 group">
+                                <span class="p-1 bg-teal-50 text-teal-700 rounded-lg group-hover:bg-teal-700 group-hover:text-white transition-all duration-300 shrink-0 mt-0.5">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </span>
+                                <p class="text-gray-600 text-sm font-medium leading-relaxed">
+                                    <strong class="text-gray-900">Analytical Modeling:</strong> Created custom Pivot tables and analytical dashboards in Excel to trace, evaluate, and present budget deviations to the senior leadership team.
+                                </p>
+                            </div>
+
+                            <!-- Deliverable 3 -->
+                            <div class="flex items-start gap-3 group">
+                                <span class="p-1 bg-teal-50 text-teal-700 rounded-lg group-hover:bg-teal-700 group-hover:text-white transition-all duration-300 shrink-0 mt-0.5">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </span>
+                                <p class="text-gray-600 text-sm font-medium leading-relaxed">
+                                    <strong class="text-gray-900">Process Optimization:</strong> Worked with cross-functional partners to streamline documentation routines, improving task compilation turnaround by 15%.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Personal Competencies Grid Redesign -->
+                <div class="max-w-4xl mx-auto">
+                    <h3 class="text-sm font-bold text-gray-500 tracking-widest uppercase text-center mb-10 flex items-center justify-center gap-2">
+                        <span class="w-8 h-px bg-gray-200"></span>
+                        Personal Competencies
+                        <span class="w-8 h-px bg-gray-200"></span>
+                    </h3>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <!-- Card 1 -->
+                        <div class="bg-white border border-gray-100 hover:border-teal-500/30 hover:shadow-xl hover:-translate-y-1.5 p-6 rounded-2xl shadow-sm text-center transition-all duration-300 group">
+                            <span class="text-3xl block mb-3 filter drop-shadow-sm group-hover:scale-110 transition-transform duration-300">🤝</span>
+                            <span class="text-base font-extrabold text-gray-900 block group-hover:text-teal-700 transition-colors duration-200">Teamwork</span>
+                            <p class="text-xs text-gray-500 font-semibold mt-2 leading-relaxed">Collaborating across multi-functional groups to align goals.</p>
+                        </div>
+
+                        <!-- Card 2 -->
+                        <div class="bg-white border border-gray-100 hover:border-teal-500/30 hover:shadow-xl hover:-translate-y-1.5 p-6 rounded-2xl shadow-sm text-center transition-all duration-300 group">
+                            <span class="text-3xl block mb-3 filter drop-shadow-sm group-hover:scale-110 transition-transform duration-300">🔄</span>
+                            <span class="text-base font-extrabold text-gray-900 block group-hover:text-teal-700 transition-colors duration-200">Adaptability</span>
+                            <p class="text-xs text-gray-500 font-semibold mt-2 leading-relaxed">Thriving in dynamic analytical environments & fast-paced ops.</p>
+                        </div>
+
+                        <!-- Card 3 -->
+                        <div class="bg-white border border-gray-100 hover:border-teal-500/30 hover:shadow-xl hover:-translate-y-1.5 p-6 rounded-2xl shadow-sm text-center transition-all duration-300 group">
+                            <span class="text-3xl block mb-3 filter drop-shadow-sm group-hover:scale-110 transition-transform duration-300">🧩</span>
+                            <span class="text-base font-extrabold text-gray-900 block group-hover:text-teal-700 transition-colors duration-200">Problem-Solving</span>
+                            <p class="text-xs text-gray-500 font-semibold mt-2 leading-relaxed">Deconstructing financial bottlenecks with precise analytics.</p>
+                        </div>
+
+                        <!-- Card 4 -->
+                        <div class="bg-white border border-gray-100 hover:border-teal-500/30 hover:shadow-xl hover:-translate-y-1.5 p-6 rounded-2xl shadow-sm text-center transition-all duration-300 group">
+                            <span class="text-3xl block mb-3 filter drop-shadow-sm group-hover:scale-110 transition-transform duration-300">⏰</span>
+                            <span class="text-base font-extrabold text-gray-900 block group-hover:text-teal-700 transition-colors duration-200">Time Management</span>
+                            <p class="text-xs text-gray-500 font-semibold mt-2 leading-relaxed">Balancing rigid MBA coursework with hands-on internships.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 7 — CONTACT -->
+        <section id="contact"
+            class="py-24 bg-[#fafbfc] border-t border-gray-100">
+            <div class="max-w-7xl mx-auto px-6">
+                <!-- Header -->
+                <div class="mb-16 text-center">
+                    <span
+                        class="text-xs font-bold text-teal-700 tracking-widest uppercase block mb-2">Get
+                        in touch</span>
+                    <h2
+                        class="text-3xl sm:text-4xl font-extrabold text-gray-900 uppercase">Let's
+                        connect</h2>
+                    <p
+                        class="text-gray-500 font-medium text-sm mt-2 max-w-xl mx-auto leading-relaxed">
+                        I'm open to internship opportunities, entry-level
+                        finance and analytics roles, and academic
+                        collaborations. Let's talk.
+                    </p>
+                    <div
+                        class="h-1 w-12 bg-teal-700 rounded-full mt-3 mx-auto"></div>
+                </div>
+
+                <div
+                    class="grid md:grid-cols-12 gap-12 items-start max-w-5xl mx-auto"
+                    x-data="{ 
+                     name: '', 
+                     email: '', 
+                     subject: '', 
+                     message: '', 
+                     submitted: false, 
+                     sending: false,
+                     web3formsAccessKey: 'YOUR_WEB3FORMS_ACCESS_KEY', 
+                     async submit() {
+                         if (this.sending) return;
+                         this.sending = true;
+                         
+                         const formattedSubject = this.subject.trim() ? this.subject.trim() : 'No Subject';
+                         const whatsappText = `*Name:* ${this.name}\n*Email:* ${this.email}\n*Subject:* ${formattedSubject}\n*Message:* ${this.message}`;
+                         const whatsappUrl = `https://wa.me/918709053823?text=${encodeURIComponent(whatsappText)}`;
+                         
+                         try {
+                             if (this.web3formsAccessKey && this.web3formsAccessKey !== 'YOUR_WEB3FORMS_ACCESS_KEY') {
+                                 await fetch('https://api.web3forms.com/submit', {
+                                     method: 'POST',
+                                     headers: {
+                                         'Content-Type': 'application/json',
+                                         'Accept': 'application/json'
+                                     },
+                                     body: JSON.stringify({
+                                         access_key: this.web3formsAccessKey,
+                                         name: this.name,
+                                         email: this.email,
+                                         subject: `Portfolio Inquiry: ${formattedSubject}`,
+                                         message: this.message,
+                                         from_name: this.name
+                                     })
+                                 });
+                             }
+                         } catch (error) {
+                             console.error('Error sending email:', error);
+                         }
+                         
+                         // Open WhatsApp direct chat in new window
+                         window.open(whatsappUrl, '_blank');
+                         
+                         // Clear form and trigger success state
+                         this.submitted = true;
+                         this.sending = false;
+                         this.name = '';
+                         this.email = '';
+                         this.subject = '';
+                         this.message = '';
+                         
+                         setTimeout(() => {
+                             this.submitted = false;
+                         }, 6000);
+                     }
+                 }">
+                    <!-- Left Side info cards -->
+                    <div class="md:col-span-5 space-y-5">
+                        <!-- Email Card -->
+                        <a href="mailto:avnishkumar53804@gmail.com"
+                            class="bg-white border border-gray-100 p-5 rounded-2xl shadow-sm hover:shadow-md transition duration-300 flex items-center gap-4">
+                            <div
+                                class="p-3 bg-teal-50 text-teal-700 rounded-xl shrink-0">
+                                <svg class="w-5 h-5" fill="none"
+                                    stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <p
+                                    class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Email
+                                    Me</p>
+                                <p
+                                    class="text-sm font-bold text-gray-800 mt-0.5 break-all">avnishkumar53804@gmail.com</p>
+                            </div>
+                        </a>
+
+                        <!-- Phone Card -->
+                        <a href="tel:+918709053823"
+                            class="bg-white border border-gray-100 p-5 rounded-2xl shadow-sm hover:shadow-md transition duration-300 flex items-center gap-4">
+                            <div
+                                class="p-3 bg-teal-50 text-teal-700 rounded-xl shrink-0">
+                                <svg class="w-5 h-5" fill="none"
+                                    stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <p
+                                    class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Call
+                                    Me</p>
+                                <p
+                                    class="text-sm font-bold text-gray-800 mt-0.5">+91
+                                    8709053823</p>
+                            </div>
+                        </a>
+
+                        <!-- Location Card -->
+                        <div
+                            class="bg-white border border-gray-100 p-5 rounded-2xl shadow-sm flex items-center gap-4">
+                            <div
+                                class="p-3 bg-teal-50 text-teal-700 rounded-xl shrink-0">
+                                <svg class="w-5 h-5" fill="none"
+                                    stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                    <path stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <p
+                                    class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Location</p>
+                                <p
+                                    class="text-sm font-bold text-gray-800 mt-0.5">Samastipur,
+                                    Bihar, India</p>
+                            </div>
+                        </div>
+
+                        <!-- LinkedIn & Github brand icons row -->
+                        <div class="flex items-center gap-3 pt-4">
+                            <!-- LinkedIn -->
+                            <a href="https://linkedin.com/in/avnishkumarray"
+                                target="_blank" rel="noopener noreferrer"
+                                aria-label="LinkedIn"
+                                class="p-3 bg-white border border-gray-200 hover:border-teal-700/40 rounded-full hover:bg-teal-50 transition duration-300 text-gray-500 hover:text-teal-700 shadow-sm flex items-center justify-center">
+                                <svg class="w-5 h-5" fill="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                                </svg>
+                            </a>
+                            <!-- GitHub -->
+                            <a href="https://github.com/avnishkumarray"
+                                target="_blank" rel="noopener noreferrer"
+                                aria-label="GitHub"
+                                class="p-3 bg-white border border-gray-200 hover:border-teal-700/40 rounded-full hover:bg-teal-50 transition duration-300 text-gray-500 hover:text-teal-700 shadow-sm flex items-center justify-center">
+                                <svg class="w-5 h-5" fill="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                                </svg>
+                            </a>
+                            <!-- Instagram -->
+                            <a
+                                href="https://www.instagram.com/avnish_yaduvanshii__?igsh=NzdwNTB2MGQwZG03"
+                                target="_blank" rel="noopener noreferrer"
+                                aria-label="Instagram"
+                                class="p-3 bg-white border border-gray-200 hover:border-teal-700/40 rounded-full hover:bg-teal-50 transition duration-300 text-gray-500 hover:text-teal-700 shadow-sm flex items-center justify-center">
+                                <svg class="w-5 h-5" fill="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                                </svg>
+                            </a>
+                            <!-- Facebook -->
+                            <a href="https://www.facebook.com/share/1Utfzt5mfm/"
+                                target="_blank" rel="noopener noreferrer"
+                                aria-label="Facebook"
+                                class="p-3 bg-white border border-gray-200 hover:border-teal-700/40 rounded-full hover:bg-teal-50 transition duration-300 text-gray-500 hover:text-teal-700 shadow-sm flex items-center justify-center">
+                                <svg class="w-5 h-5" fill="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Right Side form card -->
+                    <div class="md:col-span-7">
+                        <form @submit.prevent="submit()"
+                            class="bg-white border border-gray-100 p-8 rounded-3xl shadow-sm hover:shadow-xl transition-shadow duration-300 space-y-5 relative">
+                            <!-- Success Banner -->
+                            <div x-show="submitted"
+                                x-cloak
+                                x-transition:enter="transition ease-out duration-300"
+                                x-transition:enter-start="opacity-0 scale-95"
+                                x-transition:enter-end="opacity-100 scale-100"
+                                x-transition:leave="transition ease-in duration-200"
+                                x-transition:leave-start="opacity-100 scale-100"
+                                x-transition:leave-end="opacity-0 scale-95"
+                                class="bg-emerald-50 border border-emerald-200 p-4 rounded-2xl flex items-center gap-3.5 text-emerald-800 text-sm font-semibold">
+                                <svg class="w-6 h-6 text-emerald-600 shrink-0"
+                                    fill="none" stroke="currentColor"
+                                    stroke-width="2.5" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <div>
+                                    <p
+                                        class="font-bold text-emerald-900">Inquiry
+                                        Received & WhatsApp Opening!</p>
+                                    <p
+                                        class="text-xs text-emerald-700/85 font-medium mt-0.5">Your
+                                        message has been processed. If WhatsApp
+                                        does not open automatically, please
+                                        verify your browser's pop-up settings or
+                                        click send in the opened tab.</p>
+                                </div>
+                            </div>
+
+                            <div class="grid sm:grid-cols-2 gap-5">
+                                <div class="space-y-2">
+                                    <label for="form-name"
+                                        class="text-xs font-bold uppercase tracking-wider text-teal-700">Name
+                                        *</label>
+                                    <input type="text" id="form-name"
+                                        x-model="name" required
+                                        class="w-full bg-[#f9fbfb] border border-gray-200 focus:border-teal-700 rounded-xl px-4 py-3 text-sm text-gray-800 outline-none transition duration-300 font-medium"
+                                        placeholder="Your Name">
+                                </div>
+                                <div class="space-y-2">
+                                    <label for="form-email"
+                                        class="text-xs font-bold uppercase tracking-wider text-teal-700">Email
+                                        *</label>
+                                    <input type="email" id="form-email"
+                                        x-model="email" required
+                                        class="w-full bg-[#f9fbfb] border border-gray-200 focus:border-teal-700 rounded-xl px-4 py-3 text-sm text-gray-800 outline-none transition duration-300 font-medium"
+                                        placeholder="avnish@example.com">
+                                </div>
+                            </div>
+
+                            <div class="space-y-2">
+                                <label for="form-subject"
+                                    class="text-xs font-bold uppercase tracking-wider text-teal-700">Subject</label>
+                                <input type="text" id="form-subject"
+                                    x-model="subject"
+                                    class="w-full bg-[#f9fbfb] border border-gray-200 focus:border-teal-700 rounded-xl px-4 py-3 text-sm text-gray-800 outline-none transition duration-300 font-medium"
+                                    placeholder="Inquiry details">
+                            </div>
+
+                            <div class="space-y-2">
+                                <label for="form-message"
+                                    class="text-xs font-bold uppercase tracking-wider text-teal-700">Message
+                                    *</label>
+                                <textarea id="form-message" x-model="message"
+                                    required rows="5"
+                                    class="w-full bg-[#f9fbfb] border border-gray-200 focus:border-teal-700 rounded-xl px-4 py-3 text-sm text-gray-800 outline-none transition duration-300 resize-none font-medium"
+                                    placeholder="Hey, let's talk about the Business Analyst internship..."></textarea>
+                            </div>
+
+                            <button type="submit" :disabled="sending"
+                                class="w-full py-3.5 rounded-xl bg-teal-700 hover:bg-teal-800 disabled:bg-teal-500 disabled:cursor-not-allowed text-white font-bold text-sm uppercase tracking-wider shadow-lg hover:shadow-teal-700/20 transition-all duration-300 text-center flex items-center justify-center gap-1.5 group">
+                                <span x-show="!sending"
+                                    class="flex items-center gap-1.5 justify-center">
+                                    Send Message <span
+                                        class="transition-transform group-hover:translate-x-1">→</span>
+                                </span>
+                                <span x-show="sending"
+                                    class="flex items-center gap-1.5 justify-center"
+                                    x-cloak>
+                                    <svg class="animate-spin h-5 w-5 text-white"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12"
+                                            cy="12" r="10" stroke="currentColor"
+                                            stroke-width="4"></circle>
+                                        <path class="opacity-75"
+                                            fill="currentColor"
+                                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    Sending...
+                                </span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="py-12 bg-white border-t border-gray-100 text-center">
+            <div
+                class="max-w-7xl mx-auto px-6 flex flex-col justify-center items-center gap-6">
+                <p class="text-xs text-gray-400 font-semibold tracking-wide text-center">
+                    © 2026 Avnish Kumar Ray. All rights reserved. | Design by <a
+                        href="https://mjbytech.com" target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-teal-700 hover:underline">Ashsih Kumar</a>
+                </p>
+            </div>
+        </footer>
+
+        <!-- SCROLL-TO-TOP FLOATING BUTTON -->
+        <button x-data="{ show: false }"
+            x-init="window.addEventListener('scroll', () => show = window.scrollY > 400)"
+            x-show="show"
+            x-cloak
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 translate-y-10 scale-75"
+            x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+            x-transition:leave-end="opacity-0 translate-y-10 scale-75"
+            @click="window.scrollTo({ top: 0, behavior: 'smooth' })"
+            class="fixed bottom-6 right-6 w-12 h-12 bg-teal-700 hover:bg-teal-800 text-white rounded-full shadow-2xl z-50 transition-all duration-300 hover:-translate-y-1 flex items-center justify-center cursor-pointer"
+            aria-label="Scroll to top">
+            <svg class="w-6 h-6 text-white stroke-white" fill="none"
+                stroke="white" stroke-width="3.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="3.5" d="M5 15l7-7 7 7" />
+            </svg>
+        </button>
+
+        <!-- HIGH-PERFORMANCE SCROLL ANIMATION SYSTEM -->
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('opacity-100', 'translate-y-0');
+                            entry.target.classList.remove('opacity-0', 'translate-y-10');
+                        }
+                    });
+                }, { 
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px'
+                });
+
+                document.querySelectorAll('.scroll-animate').forEach(el => {
+                    observer.observe(el);
+                });
+            });
+        </script>
+
+    </body>
+</html>
